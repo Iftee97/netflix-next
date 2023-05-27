@@ -3,6 +3,7 @@ import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { PlayIcon } from '@heroicons/react/24/solid'
 
 export default function MovieCard({ data }) {
+  console.log('data (NEXT SSR: /components/MovieCard.js): >>>>>>>>>>', data)
   const router = useRouter()
 
   return (
@@ -24,7 +25,7 @@ export default function MovieCard({ data }) {
           <div className="flex flex-row items-center gap-3">
             <div
               className="cursor-pointer w-6 h-6 lg:w-10 lg:h-10 bg-white rounded-full flex justify-center items-center transition hover:bg-neutral-300"
-            // onClick={redirectToWatch}
+              onClick={() => router.push(`/watch/${data?.id}`)}
             >
               <PlayIcon className="text-black ml-1 w-4 lg:w-6" />
             </div>
@@ -35,8 +36,8 @@ export default function MovieCard({ data }) {
               <ChevronDownIcon className="text-white group-hover/item:text-neutral-300 w-4 lg:w-6" />
             </div>
           </div>
-          <p className="text-green-400 font-semibold mt-4">
-            New <span className="text-white">2023</span>
+          <p className="text-slate-400 font-semibold mt-4">
+            {data?.title}
           </p>
           <div className="flex flex-row mt-4 gap-2 items-center">
             <p className="text-white text-[10px] lg:text-sm">
