@@ -1,8 +1,7 @@
 import Head from "next/head"
 import Link from "next/link"
-import { useRouter } from "next/router"
 import { useState } from "react"
-import { getSession, signIn } from 'next-auth/react'
+import { signIn, getSession } from 'next-auth/react'
 
 // components
 import Input from "@/components/Input"
@@ -19,8 +18,6 @@ export default function Auth() {
   const [variant, setVariant] = useState("login")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-
-  const router = useRouter()
 
   function toggleVariant() {
     setVariant(variant === "login" ? "register" : "login")
@@ -63,9 +60,8 @@ export default function Auth() {
       await signIn('credentials', {
         email,
         password,
-        callbackUrl: '/' // redirect to / page after login
+        callbackUrl: '/profiles' // redirect to / page after login
       })
-      // router.push('/') // redirect to / page after login
       setLoading(false)
     } catch (error) {
       console.log('error: >>>>>>>>>', error)
@@ -139,7 +135,7 @@ export default function Auth() {
                 <button
                   className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition"
                   onClick={() => signIn('google', {
-                    callbackUrl: '/'
+                    callbackUrl: '/profiles'
                   })}
                 >
                   <FcGoogle size={32} />
@@ -147,7 +143,7 @@ export default function Auth() {
                 <button
                   className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition"
                   onClick={() => signIn('github', {
-                    callbackUrl: '/'
+                    callbackUrl: '/profiles'
                   })}
                 >
                   <FaGithub size={32} />
@@ -170,23 +166,20 @@ export default function Auth() {
   )
 }
 
-// export async function getServerSideProps(context) {
-//   const session = await getSession(context)
-//   console.log('session: >>>>>>>>>>', session)
+export async function getServerSideProps(context) {
+  const session = await getSession(context)
+  console.log('session (NEXT SSR: /): >>>>>>>>>>', session)
 
-//   // uncomment later
-//   if (!session) {
-//     return {
-//       redirect: {
-//         destination: '/',
-//         permanent: false,
-//       }
-//     }
-//   }
+  if (session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      }
+    }
+  }
 
-//   return {
-//     props: {
-//       session: session || null
-//     }
-//   }
-// }
+  return {
+    props: {}
+  }
+}
