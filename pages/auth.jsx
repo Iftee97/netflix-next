@@ -4,8 +4,13 @@ import { useRouter } from "next/router"
 import { useState } from "react"
 import { getSession, signIn } from 'next-auth/react'
 
+// components
 import Input from "@/components/Input"
 import Loading from "@/components/Loading"
+
+// icons
+import { FcGoogle } from 'react-icons/fc'
+import { FaGithub } from 'react-icons/fa'
 
 export default function Auth() {
   const [name, setName] = useState("")
@@ -58,10 +63,9 @@ export default function Auth() {
       await signIn('credentials', {
         email,
         password,
-        redirect: false,
-        // callbackUrl: '/profiles'
+        callbackUrl: '/' // redirect to / page after login
       })
-      // router.push('/profiles') // redirect to profiles page after login
+      // router.push('/') // redirect to / page after login
       setLoading(false)
     } catch (error) {
       console.log('error: >>>>>>>>>', error)
@@ -76,7 +80,7 @@ export default function Auth() {
   return (
     <>
       <Head>
-        <title>Netflix | Auth</title>
+        <title>Auth | Netflix</title>
       </Head>
 
       <div className="relative h-full w-full bg-[url('../public/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
@@ -131,6 +135,24 @@ export default function Auth() {
                   </span>
                 )}
               </button>
+              <div className="flex flex-row items-center gap-4 mt-8 justify-center">
+                <button
+                  className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition"
+                  onClick={() => signIn('google', {
+                    callbackUrl: '/'
+                  })}
+                >
+                  <FcGoogle size={32} />
+                </button>
+                <button
+                  className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition"
+                  onClick={() => signIn('github', {
+                    callbackUrl: '/'
+                  })}
+                >
+                  <FaGithub size={32} />
+                </button>
+              </div>
               <p className="text-neutral-500 mt-12">
                 {variant === 'login' ? 'First time using Netflix?' : 'Already have an account?'}
                 <span
@@ -147,3 +169,24 @@ export default function Auth() {
     </>
   )
 }
+
+// export async function getServerSideProps(context) {
+//   const session = await getSession(context)
+//   console.log('session: >>>>>>>>>>', session)
+
+//   // uncomment later
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: '/',
+//         permanent: false,
+//       }
+//     }
+//   }
+
+//   return {
+//     props: {
+//       session: session || null
+//     }
+//   }
+// }
