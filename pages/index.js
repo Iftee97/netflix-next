@@ -2,43 +2,46 @@ import Head from "next/head"
 import Link from "next/link"
 import { signOut, getSession } from "next-auth/react"
 import useCurrentUser from "@/hooks/useCurrentUser"
+import useMovieList from "@/hooks/useMovieList"
 
-import movies from "@/movies.json"
+// import movies from "@/movies.json"
 
 // components
 import Navbar from "@/components/Navbar"
 import BillBoard from "@/components/BillBoard"
+import MovieList from "@/components/MovieList"
 
 export default function Home() {
   const { data: user, isLoading } = useCurrentUser()
-  // console.log('user: >>>>>>>>>>', user)
+  const { data: movies } = useMovieList()
+  console.log('data (NEXT SSR: /): >>>>>>>>>>', movies)
 
-  async function addMoviesToDb() {
-    const response = await fetch('/api/add-movies', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(movies),
-    })
-    if (response.ok) {
-      const data = await response.json()
-      console.log('data: >>>>>>>>>>', data);
-    }
-  }
+  // async function addMoviesToDb() {
+  //   const response = await fetch('/api/add-movies', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(movies),
+  //   })
+  //   if (response.ok) {
+  //     const data = await response.json()
+  //     console.log('data: >>>>>>>>>>', data);
+  //   }
+  // }
 
-  async function deleteMoviesFromDb() {
-    const response = await fetch('/api/delete-movies', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-    if (response.ok) {
-      const data = await response.json()
-      console.log('data: >>>>>>>>>>', data);
-    }
-  }
+  // async function deleteMoviesFromDb() {
+  //   const response = await fetch('/api/delete-movies', {
+  //     method: 'DELETE',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //   })
+  //   if (response.ok) {
+  //     const data = await response.json()
+  //     console.log('data: >>>>>>>>>>', data);
+  //   }
+  // }
 
   return (
     <>
@@ -49,6 +52,9 @@ export default function Home() {
       <>
         <Navbar />
         <BillBoard />
+        <div className="pb-40">
+          <MovieList title="Trending Now" data={movies} />
+        </div>
 
         <>
           {/* <div className="flex items-center gap-4 mt-[100px] ml-[100px]">
