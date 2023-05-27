@@ -1,9 +1,15 @@
 import useBillboard from "@/hooks/useBillboard"
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import PlayButton from "./PlayButton"
+import useInfoModalStore from '@/hooks/useInfoModalStore'
 
 export default function BillBoard() {
   const { data } = useBillboard()
+  const { openModal } = useInfoModalStore()
+
+  function handleOpenModal() {
+    openModal(data?.id)
+  }
 
   return (
     <div className="relative h-[56.25vw]">
@@ -26,7 +32,7 @@ export default function BillBoard() {
           <PlayButton movieId={data?.id} />
           <button
             className="bg-white bg-opacity-30 text-white rounded-md py-1 md:py-2 px-2 md:px-4 w-auto text-xs lg:text-lg font-semibold flex flex-row items-center hover:bg-opacity-20 transition"
-          // onClick={handleOpenModal}
+            onClick={handleOpenModal}
           >
             <InformationCircleIcon className="w-4 md:w-7 mr-1" />
             More Info

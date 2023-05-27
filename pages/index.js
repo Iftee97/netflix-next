@@ -1,15 +1,18 @@
 import Head from "next/head"
 import { getSession } from "next-auth/react"
 import useMovieList from "@/hooks/useMovieList"
+import useInfoModalStore from '@/hooks/useInfoModalStore'
 
 // components
 import Navbar from "@/components/Navbar"
 import BillBoard from "@/components/BillBoard"
 import MovieList from "@/components/MovieList"
+import InfoModal from "@/components/InfoModal"
 
 export default function Home() {
   const { data: movies } = useMovieList()
   console.log('data (NEXT SSR: /): >>>>>>>>>>', movies)
+  const { isOpen, closeModal } = useInfoModalStore()
 
   return (
     <>
@@ -18,6 +21,7 @@ export default function Home() {
       </Head>
 
       <>
+        <InfoModal visible={isOpen} onClose={closeModal} />
         <Navbar />
         <BillBoard />
         <div className="pb-40">
