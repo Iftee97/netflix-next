@@ -1,6 +1,5 @@
 import Head from "next/head"
 import Link from "next/link"
-import { useEffect } from "react"
 import { signOut, getSession } from "next-auth/react"
 import useCurrentUser from "@/hooks/useCurrentUser"
 
@@ -8,10 +7,11 @@ import movies from "@/movies.json"
 
 // components
 import Navbar from "@/components/Navbar"
+import BillBoard from "@/components/BillBoard"
 
 export default function Home() {
   const { data: user, isLoading } = useCurrentUser()
-  console.log('user: >>>>>>>>>>', user)
+  // console.log('user: >>>>>>>>>>', user)
 
   async function addMoviesToDb() {
     const response = await fetch('/api/add-movies', {
@@ -48,6 +48,7 @@ export default function Home() {
 
       <>
         <Navbar />
+        <BillBoard />
 
         <>
           {/* <div className="flex items-center gap-4 mt-[100px] ml-[100px]">
