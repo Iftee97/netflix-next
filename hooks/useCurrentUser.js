@@ -1,5 +1,4 @@
 import useSwr from 'swr'
-
 import fetcher from '@/libs/fetcher'
 
 export default function useCurrentUser() {
