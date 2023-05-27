@@ -12,9 +12,10 @@ export default function Navbar() {
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [showBackground, setShowBackground] = useState(false)
 
+  const TOP_OFFSET = 66
+
   useEffect(() => {
     function handleScroll() {
-      console.log(window.scrollY)
       if (window.scrollY >= TOP_OFFSET) {
         setShowBackground(true)
       } else {
@@ -72,7 +73,10 @@ export default function Navbar() {
           <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
             <BellIcon className="w-6" />
           </div>
-          <div onClick={toggleAccountMenu} className="flex flex-row items-center gap-2 cursor-pointer relative">
+          <div
+            className="flex flex-row items-center gap-2 cursor-pointer relative"
+            onClick={toggleAccountMenu}
+          >
             <div className="w-6 h-6 lg:w-10 lg:h-10 rounded-md overflow-hidden">
               <img src="/images/default-blue.png" alt="" />
             </div>
