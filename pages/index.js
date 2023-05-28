@@ -11,7 +11,6 @@ import InfoModal from "@/components/InfoModal"
 
 export default function Home() {
   const { data: movies } = useMovieList()
-  console.log('data (NEXT SSR: /): >>>>>>>>>>', movies)
   const { isOpen, closeModal } = useInfoModalStore()
 
   return (
@@ -32,7 +31,7 @@ export default function Home() {
   )
 }
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
   const session = await getSession(context)
   console.log('session (NEXT SSR: /): >>>>>>>>>>', session)
 

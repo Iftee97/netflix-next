@@ -4,9 +4,7 @@ import { PlayIcon } from '@heroicons/react/24/solid'
 import useInfoModalStore from '@/hooks/useInfoModalStore'
 
 export default function MovieCard({ data }) {
-  console.log('data (NEXT SSR: /components/MovieCard.js): >>>>>>>>>>', data)
   const router = useRouter()
-
   const { openModal } = useInfoModalStore()
 
   return (

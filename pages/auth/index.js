@@ -166,7 +166,7 @@ export default function Auth() {
   )
 }
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
   const session = await getSession(context)
   console.log('session (NEXT SSR: /): >>>>>>>>>>', session)
 
