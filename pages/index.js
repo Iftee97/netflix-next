@@ -31,7 +31,7 @@ export default function Home() {
   )
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const session = await getSession(context)
   console.log('session (NEXT SSR: /): >>>>>>>>>>', session)
 
