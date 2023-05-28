@@ -60,10 +60,16 @@ export const authOptions = {
   session: {
     strategy: 'jwt'
   },
-  // jwt: {
-  //   secret: process.env.NEXTAUTH_JWT_SECRET,
-  // },
-  secret: process.env.NEXTAUTH_SECRET
+  jwt: {
+    secret: process.env.NEXTAUTH_JWT_SECRET,
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async jwt({ token }) {
+      token.userRole = "admin"
+      return token
+    },
+  },
 }
 
 export default NextAuth(authOptions)
