@@ -69,6 +69,10 @@ export const authOptions = {
       token.userRole = "admin"
       return token
     },
+    async session({ session, token, user }) {
+      session.accessToken = token.accessToken
+      return session
+    } // Now whenever you call getSession or useSession, the data object which is returned will include the accessToken value.
   },
 }
 
